@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ControlJugador : MonoBehaviour {
 
-	public float moveForce= 20f, jumpForce = 700f, maxVelocity = 4f;
+	public float moveForce= 20f, jumpForce = 400f, maxVelocity = 4f;
 	private bool grounded;
 	private Rigidbody2D myBody;
 	private Animator anim;
@@ -15,12 +15,9 @@ public class ControlJugador : MonoBehaviour {
 
 		}
 
-	void Start () {
-		
-	}
 
 	void FixedUpdate () {
-		PlayerWalkKB ();
+		PlayerWalk ();
 	}
 
 	void InitializeVariables(){
@@ -29,7 +26,7 @@ public class ControlJugador : MonoBehaviour {
 		anim = GetComponent <Animator> ();
 	}
 
-	void PlayerWalkKB(){
+	void PlayerWalk(){
 
 		float forceX = 0f;
 		float forceY = 0f;
@@ -46,9 +43,11 @@ public class ControlJugador : MonoBehaviour {
 					forceX = moveForce * 1.5f;
 				}
 			}
+            //This is to flip the animations
 			Vector3 scale = transform.localScale;
-			scale.x=1f;
+			scale.x=-1;
 			transform.localScale = scale;
+            anim.SetBool("RunL" = true);
 
 			anim.SetBool ("Walk", true);
 
@@ -62,14 +61,15 @@ public class ControlJugador : MonoBehaviour {
 				}
 			}
 			Vector3 scale = transform.localScale;
-			scale.x=-1f;
+			scale.x=1;
 			transform.localScale = scale;
 
-			anim.SetBool ("Walk",true);
+			anim.SetBool ("RunR",true);
 
 		} else if (h==0){
-			anim.SetBool ("Walk",false);
-		}
+			anim.SetBool ("RunR",false);
+            anim.SetBool("RunR", false);
+        }
 		if (Input.GetKey (KeyCode.Space)) {
 			if (grounded) {
 				grounded = false;
